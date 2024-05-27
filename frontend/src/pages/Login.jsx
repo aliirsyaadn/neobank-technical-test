@@ -16,7 +16,6 @@ const Login = () => {
 	const navigate = useNavigate();
 
 	const Login = async () => {
-		console.log('Login', corpAccNo, userId, loginPassword)
 		try {
 			const { data } = await login({
 				corporate_account_no: corpAccNo,

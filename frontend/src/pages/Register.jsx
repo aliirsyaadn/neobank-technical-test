@@ -30,7 +30,6 @@ const Login = () => {
 	const navigate = useNavigate();
 
 	const Register = async () => {
-		console.log('Register', corpAccNo, userId, loginPassword)
 		try {
 			await register({
 				id: userId,
@@ -52,7 +51,6 @@ const Login = () => {
 	}
 
     const SendOTPCode = async () => {
-        console.log('Send OTP Code', email)
         try {
             await sendOTPCode({
                 email: email

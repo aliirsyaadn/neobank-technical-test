@@ -28,7 +28,6 @@ const TransactionCreate = () => {
       const formData = new FormData()
       formData.append('file', file)
       const data = await validateTransferRecord(formData)
-      console.log(data)
       if (data.message === 'success') {
         setTransferRecords(data.data.transfer_records)
         setTotalTransferRecord(data.data.total_transfer_record)
@@ -56,7 +55,7 @@ const TransactionCreate = () => {
       })
       navigation('/')
     } catch (err) {
-      console.log(err)
+      alert(err)
     }
   }
 
