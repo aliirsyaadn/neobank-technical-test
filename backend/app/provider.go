@@ -37,7 +37,7 @@ func provideRouter(
 	authMiddleware middleware.AuthMiddleware,
 ) *gin.Engine {
 	r := gin.New()
-	r.Use(gin.Logger(), gin.Recovery())
+	r.Use(gin.Logger(), gin.Recovery(), Cors)
 
 	// health check
 	r.GET("/", func(c *gin.Context) {
@@ -50,4 +50,18 @@ func provideRouter(
 	router.NewTransactionRouter(r.Group("/transaction"), transactionHandler, authMiddleware).Routers()
 
 	return r
+}
+
+func Cors(c *gin.Context) {
+	c.Writer.Header().Set(`Access-Control-Allow-Origin`, `*`)
+	c.Writer.Header().Set(`Access-Control-Allow-Credentials`, `true`)
+	c.Writer.Header().Set(`Access-Control-Allow-Headers`, `*`)
+	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE")
+
+	if c.Request.Method == "OPTIONS" {
+		c.AbortWithStatus(204)
+		return
+	}
+
+	c.Next()
 }

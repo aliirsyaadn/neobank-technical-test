@@ -1,16 +1,20 @@
 # Neobank Technical Test
 
-This project is a backend technical test for the recruitment process at Neobank. It is designed to evaluate the technical skills and understanding of backend development concepts of prospective developers.
+This project is a technical test for the recruitment process at Neobank. It is designed to evaluate the technical skills and understanding of development concepts of prospective developers.
 
 ## Description
 
-The project involves creating a RESTful API for user role based access and transaction management using Golang, PostgreSQL, and Docker.
+The project involves creating SPA React and backend RESTful API for user role based access and transaction management using Golang, PostgreSQL, and Docker.
 
 ## Tech Stack
 Primary Techstack
+- ReactJS
 - Go
 - PostgreSQL
 - Docker
+
+Frontend Tools
+- [Vite](https://vitejs.dev/) : local development server
 
 Golang Library
 - [Gin](https://github.com/gin-gonic/gin) : Rest api framework
@@ -21,6 +25,7 @@ Golang Library
 - [MailjetClient](https://github.com/mailjet/mailjet-apiv3-go/v4) : Mailjet Golang Client
 - [JWT](https://github.com/dgrijalva/jwt-go): JWT Library
 
+# Backend
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables (.env file):
@@ -71,6 +76,62 @@ make docker-up
 
 The server will start running at localhost and port that specify on environment variables.
 
+## Database Schema
+```sql
+CREATE TABLE "users" (
+    "id" text PRIMARY KEY,
+    "corporate_account_no" text NOT NULL UNIQUE,
+    "corporate_name" text NOT NULL,
+    "name" text NOT NULL,
+    "role" text NOT NULL,
+    "phone" text NOT NULL,
+    "email" text NOT NULL UNIQUE,
+    "password" text NOT NULL,
+    "verified" boolean DEFAULT false,
+    "created_at" timestamptz,
+    "updated_at" timestamptz
+);
+
+CREATE TABLE "user_otps" (
+    "id" serial PRIMARY KEY,
+    "email" text NOT NULL,
+    "otp" text NOT NULL,
+    "expired_at" timestamptz NOT NULL,
+    "created_at" timestamptz,
+    "updated_at" timestamptz
+);
+
+CREATE TABLE "transactions" (
+    "reference_no" text PRIMARY KEY,
+    "total_transfer_amount" decimal NOT NULL,
+    "total_transfer_record" bigint NOT NULL,
+    "from_account_no" text NOT NULL,
+    "maker_user_id" text NOT NULL,
+    "transfer_date" timestamptz DEFAULT CURRENT_TIMESTAMP,
+    "status" text DEFAULT 'AWAITING_APPROVAL',
+    "instruction_type" text NOT NULL,
+    "transfer_type" text DEFAULT 'ONLINE',
+    "estimated_service_fee" decimal DEFAULT 0,
+    "created_at" timestamptz,
+    "updated_at" timestamptz,
+    CONSTRAINT "fk_transactions_maker_user_detail" FOREIGN KEY ("maker_user_id") REFERENCES "users"("id")
+);
+
+CREATE TABLE "transfer_records" (
+    "id" serial PRIMARY KEY,
+    "transaction_reference_no" text NOT NULL,
+    "no" int NOT NULL,
+    "to_account_no" text NOT NULL,
+    "to_account_name" text NOT NULL,
+    "to_bank_name" text NOT NULL,
+    "amount" decimal DEFAULT 0,
+    "description" text,
+    "status" text DEFAULT 'AWAITING_APPROVAL',
+    "created_at" timestamptz,
+    "updated_at" timestamptz,
+    CONSTRAINT "fk_transfer_records_transaction" FOREIGN KEY ("transaction_reference_no") REFERENCES "transactions"("reference_no")
+);
+```
 
 ## Development
 If you add changes on dependency, you can add your dependency on `app/provider.go` and simply run this command to automatic generate dependency injection
@@ -110,5 +171,25 @@ The `model` folder is used to store primary data structures that interact with t
 
 Lastly, the `entity` folder contains additional struct files that help reduce code redundancy. By reusing these entities across different parts of the application, we can ensure consistency and reduce the potential for errors.
 
-## License
-This project is MIT licensed.
+# Frontend
+## How to run
+Clone the project to your local directory
+```bash
+git clone https://github.com/aliirsyaadn/neobank-technical-test
+```
+
+Change directory to the project folder
+```bash
+cd neobank-technical-test
+cd frontend
+```
+
+Install dependency 
+```bash
+npm i
+```
+
+Run server 
+```bash
+npm run dev
+```

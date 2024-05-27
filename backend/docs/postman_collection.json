@@ -1,0 +1,1064 @@
+{
+	"info": {
+		"_postman_id": "3148b518-7971-4301-975b-ec17eac98803",
+		"name": "Neo Bank Technical Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29985476"
+	},
+	"item": [
+		{
+			"name": "Register User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"id\": \"approver2\",\n      \"corporate_account_no\": \"00022222\",\n      \"corporate_name\": \"My Corporation Approver 2\",\n      \"name\": \"Approver 2\",\n      \"role\": \"APPROVER\",\n      \"phone\": \"+1234567890\",\n      \"password\": \"securePassword123\",\n      \"email\": \"approver2@gmail.com\",\n      \"otp\": \"559447\"\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/user/register",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"id\": \"maker2\",\n      \"corporate_account_no\": \"222222222\",\n      \"corporate_name\": \"My Corporation Maker 2\",\n      \"name\": \"Maker 2\",\n      \"role\": \"MAKER\",\n      \"phone\": \"+1234567890\",\n      \"password\": \"securePassword123\",\n      \"email\": \"maker2@gmail.com\",\n      \"otp\": \"189904\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 05:04:27 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "314"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"success\",\n    \"data\": {\n        \"id\": \"maker2\",\n        \"corporate_account_no\": \"222222222\",\n        \"corporate_name\": \"My Corporation Maker 2\",\n        \"name\": \"Maker 2\",\n        \"role\": \"MAKER\",\n        \"phone\": \"+1234567890\",\n        \"email\": \"maker2@gmail.com\",\n        \"verified\": true,\n        \"created_at\": \"2024-05-27T12:04:27.118601+07:00\",\n        \"updated_at\": \"2024-05-27T12:04:27.118601+07:00\"\n    }\n}"
+				},
+				{
+					"name": "invalid otp",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"id\": \"approver2\",\n      \"corporate_account_no\": \"00022222\",\n      \"corporate_name\": \"My Corporation Approver 2\",\n      \"name\": \"Approver 2\",\n      \"role\": \"APPROVER\",\n      \"phone\": \"+1234567890\",\n      \"password\": \"securePassword123\",\n      \"email\": \"approver2@gmail.com\",\n      \"otp\": \"929104\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 05:14:12 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "54"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Failed to register\",\n    \"error\": \"invalid otp\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json()",
+							"pm.environment.set(\"access_token\", response.data.token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    // \"corporate_account_no\": \"11111111\",\n    // \"id\": \"maker1\",\n    // \"corporate_account_no\": \"222222222\",\n    // \"id\": \"maker2\",\n    \"corporate_account_no\": \"00011111\",\n    \"id\": \"approver1\",\n    // \"corporate_account_no\": \"00022222\",\n    // \"id\": \"approver2\",\n    \"password\": \"securePassword123\"\n}\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/user/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Register User Copy",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"corporate_account_no\": \"111111111\",\n    \"id\": \"maker1\",\n    // \"corporate_account_no\": \"222222222\",\n    // \"id\": \"maker2\",\n    // \"corporate_account_no\": \"00011111\",\n    // \"id\": \"approver1\",\n    // \"corporate_account_no\": \"00022222\",\n    // \"id\": \"approver2\",\n    \"password\": \"securePassword123\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 05:19:19 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "469"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"success\",\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjIwMjc4MjcxNTksImlkIjoibWFrZXIxIiwicm9sZSI6Ik1BS0VSIn0.wId5zvlxydp1HKa3IjNwQyUTZzSMrY9oZLOZEpeioqI\",\n        \"id\": \"maker1\",\n        \"corporate_account_no\": \"111111111\",\n        \"corporate_name\": \"My Corporation Maker 1\",\n        \"name\": \"Maker 1\",\n        \"role\": \"MAKER\",\n        \"phone\": \"+1234567890\",\n        \"email\": \"maker1@gmail.com\",\n        \"verified\": true,\n        \"created_at\": \"2024-05-27T11:55:54.136986+07:00\",\n        \"updated_at\": \"2024-05-27T11:55:54.136986+07:00\"\n    }\n}"
+				},
+				{
+					"name": "wrong password",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"corporate_account_no\": \"111111111\",\n    \"id\": \"maker1\",\n    // \"corporate_account_no\": \"222222222\",\n    // \"id\": \"maker2\",\n    // \"corporate_account_no\": \"00011111\",\n    // \"id\": \"approver1\",\n    // \"corporate_account_no\": \"00022222\",\n    // \"id\": \"approver2\",\n    \"password\": \"securePassword13\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 05:19:30 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "56"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Failed to login\",\n    \"error\": \"invalid password\"\n}"
+				},
+				{
+					"name": "invalid corporate account no",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"corporate_account_no\": \"11111111\",\n    \"id\": \"maker1\",\n    // \"corporate_account_no\": \"222222222\",\n    // \"id\": \"maker2\",\n    // \"corporate_account_no\": \"00011111\",\n    // \"id\": \"approver1\",\n    // \"corporate_account_no\": \"00022222\",\n    // \"id\": \"approver2\",\n    \"password\": \"securePassword123\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 05:19:48 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "68"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Failed to login\",\n    \"error\": \"invalid corporate account no\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Send OTP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"approver2@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/user/send-otp",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"user",
+						"send-otp"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "failed email already registered",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"maker1@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/send-otp",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"send-otp"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 05:02:56 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "67"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Failed to send OTP\",\n    \"error\": \"email already registered\"\n}"
+				},
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"maker2@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/send-otp",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"send-otp"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 05:03:55 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "21"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"success\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Transaction List",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/transaction",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"transaction"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "AWAITING_APPROVAL",
+							"description": "AWAITING_APPROVAL;APPROVED;REJECTED",
+							"disabled": true
+						},
+						{
+							"key": "from_account_no",
+							"value": "128736182376",
+							"disabled": true
+						},
+						{
+							"key": "end_date",
+							"value": "2024-12-01",
+							"description": "YYYY-MM-DD",
+							"disabled": true
+						},
+						{
+							"key": "start_date",
+							"value": "2024-12-02",
+							"description": "YYYY-MM-DD",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"description": "default 1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "1",
+							"description": "default 10",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/transaction?status=AWAITING_APPROVAL",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transaction"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "AWAITING_APPROVAL",
+									"description": "AWAITING_APPROVAL;APPROVED;REJECTED"
+								},
+								{
+									"key": "from_account_no",
+									"value": "128736182376",
+									"disabled": true
+								},
+								{
+									"key": "end_date",
+									"value": "2024-12-01",
+									"description": "YYYY-MM-DD",
+									"disabled": true
+								},
+								{
+									"key": "start_date",
+									"value": "2024-12-02",
+									"description": "YYYY-MM-DD",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "default 1",
+									"disabled": true
+								},
+								{
+									"key": "page_size",
+									"value": "1",
+									"description": "default 10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 06:10:43 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "519"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"success\",\n    \"pagination\": {\n        \"page\": 1,\n        \"page_size\": 10,\n        \"data_per_page\": 1,\n        \"total_data\": 1\n    },\n    \"data\": [\n        {\n            \"reference_no\": \"ce9wkgrnn0rvif7vlbxm59x6owg4sngn\",\n            \"total_transfer_amount\": 6.6,\n            \"total_transfer_record\": 3,\n            \"from_account_no\": \"111111111\",\n            \"maker_user_id\": \"maker1\",\n            \"transfer_date\": \"2024-05-27T12:35:54.225566+07:00\",\n            \"status\": \"AWAITING_APPROVAL\",\n            \"instruction_type\": \"IMMEDIATE\",\n            \"transfer_type\": \"ONLINE\",\n            \"estimated_service_fee\": 0,\n            \"created_at\": \"2024-05-27T12:35:54.22611+07:00\",\n            \"updated_at\": \"2024-05-27T12:35:54.22611+07:00\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "success no data",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/transaction?status=AWAITING_APPROVAL",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transaction"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "AWAITING_APPROVAL",
+									"description": "AWAITING_APPROVAL;APPROVED;REJECTED"
+								},
+								{
+									"key": "from_account_no",
+									"value": "128736182376",
+									"disabled": true
+								},
+								{
+									"key": "end_date",
+									"value": "2024-12-01",
+									"description": "YYYY-MM-DD",
+									"disabled": true
+								},
+								{
+									"key": "start_date",
+									"value": "2024-12-02",
+									"description": "YYYY-MM-DD",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "default 1",
+									"disabled": true
+								},
+								{
+									"key": "page_size",
+									"value": "1",
+									"description": "default 10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 06:19:26 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "103"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"success\",\n    \"pagination\": {\n        \"page\": 1,\n        \"page_size\": 10,\n        \"data_per_page\": 0,\n        \"total_data\": 0\n    },\n    \"data\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Transaction Detail",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/transaction/:reference_no",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"transaction",
+						":reference_no"
+					],
+					"variable": [
+						{
+							"key": "reference_no",
+							"value": "ce9wkgrnn0rvif7vlbxm59x6owg4sngn"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/transaction/:reference_no",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transaction",
+								":reference_no"
+							],
+							"variable": [
+								{
+									"key": "reference_no",
+									"value": "ce9wkgrnn0rvif7vlbxm59x6owg4sngn"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 06:18:41 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1698"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"success\",\n    \"data\": {\n        \"reference_no\": \"ce9wkgrnn0rvif7vlbxm59x6owg4sngn\",\n        \"total_transfer_amount\": 6.6,\n        \"total_transfer_record\": 3,\n        \"from_account_no\": \"111111111\",\n        \"maker_user_id\": \"maker1\",\n        \"maker_user_detail\": {\n            \"id\": \"maker1\",\n            \"corporate_account_no\": \"111111111\",\n            \"corporate_name\": \"My Corporation Maker 1\",\n            \"name\": \"Maker 1\",\n            \"role\": \"MAKER\",\n            \"phone\": \"+1234567890\",\n            \"email\": \"maker1@gmail.com\",\n            \"verified\": true,\n            \"created_at\": \"2024-05-27T11:55:54.136986+07:00\",\n            \"updated_at\": \"2024-05-27T11:55:54.136986+07:00\"\n        },\n        \"transfer_date\": \"2024-05-27T12:35:54.225566+07:00\",\n        \"status\": \"APPROVED\",\n        \"instruction_type\": \"IMMEDIATE\",\n        \"transfer_type\": \"ONLINE\",\n        \"estimated_service_fee\": 0,\n        \"created_at\": \"2024-05-27T12:35:54.22611+07:00\",\n        \"updated_at\": \"2024-05-27T13:16:55.396064+07:00\",\n        \"transfer_records\": [\n            {\n                \"id\": 1,\n                \"transaction_reference_no\": \"ce9wkgrnn0rvif7vlbxm59x6owg4sngn\",\n                \"no\": 1,\n                \"to_account_no\": \"00011111\",\n                \"to_account_name\": \"Approver 1\",\n                \"to_bank_name\": \"BNC\",\n                \"transfer_amount\": 1.1,\n                \"description\": \"\",\n                \"status\": \"APPROVED\",\n                \"created_at\": \"2024-05-27T12:35:54.235503+07:00\",\n                \"updated_at\": \"2024-05-27T13:16:55.404235+07:00\"\n            },\n            {\n                \"id\": 2,\n                \"transaction_reference_no\": \"ce9wkgrnn0rvif7vlbxm59x6owg4sngn\",\n                \"no\": 2,\n                \"to_account_no\": \"00022222\",\n                \"to_account_name\": \"Approver 2\",\n                \"to_bank_name\": \"BNC\",\n                \"transfer_amount\": 2.2,\n                \"description\": \"\",\n                \"status\": \"APPROVED\",\n                \"created_at\": \"2024-05-27T12:35:54.235503+07:00\",\n                \"updated_at\": \"2024-05-27T13:16:55.404235+07:00\"\n            },\n            {\n                \"id\": 3,\n                \"transaction_reference_no\": \"ce9wkgrnn0rvif7vlbxm59x6owg4sngn\",\n                \"no\": 3,\n                \"to_account_no\": \"222222222\",\n                \"to_account_name\": \"Maker 2\",\n                \"to_bank_name\": \"BNC\",\n                \"transfer_amount\": 3.3,\n                \"description\": \"\",\n                \"status\": \"APPROVED\",\n                \"created_at\": \"2024-05-27T12:35:54.235503+07:00\",\n                \"updated_at\": \"2024-05-27T13:16:55.404235+07:00\"\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Validate Transfer Record",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/ali/Documents/1_projects/neobank-technical-test/backend/secrets/success.csv"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}/transaction/validate-transfer-record",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"transaction",
+						"validate-transfer-record"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "errors",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/ali/Documents/1_projects/neobank-technical-test/backend/secrets/example.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/transaction/validate-transfer-record",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transaction",
+								"validate-transfer-record"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 05:22:14 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "546"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"success with errors\",\n    \"data\": {\n        \"transfer_records\": [\n            {\n                \"no\": 1,\n                \"to_bank_name\": \"BNC\",\n                \"to_account_no\": \"222222222\",\n                \"to_account_name\": \"John Doe\",\n                \"transfer_amount\": 100\n            },\n            {\n                \"no\": 2,\n                \"to_bank_name\": \"BNC\",\n                \"to_account_no\": \"1723817236\",\n                \"to_account_name\": \"Jane Doe\",\n                \"transfer_amount\": 200\n            },\n            {\n                \"no\": 3,\n                \"to_bank_name\": \"BNC\",\n                \"to_account_no\": \"222222222\",\n                \"to_account_name\": \"Maker 2\",\n                \"transfer_amount\": 300\n            }\n        ],\n        \"total_transfer_record\": 3,\n        \"total_transfer_amount\": 600,\n        \"errors\": [\n            \"1 records error not found\",\n            \"1 records error not match account name query by issuing bank\"\n        ]\n    }\n}"
+				},
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/ali/Documents/1_projects/neobank-technical-test/backend/secrets/success.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/transaction/validate-transfer-record",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transaction",
+								"validate-transfer-record"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 05:29:48 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "433"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"success\",\n    \"data\": {\n        \"transfer_records\": [\n            {\n                \"no\": 1,\n                \"to_bank_name\": \"BNC\",\n                \"to_account_no\": \"00011111\",\n                \"to_account_name\": \"Approver 1\",\n                \"transfer_amount\": 1.1\n            },\n            {\n                \"no\": 2,\n                \"to_bank_name\": \"BNC\",\n                \"to_account_no\": \"00022222\",\n                \"to_account_name\": \"Approver 2\",\n                \"transfer_amount\": 2.2\n            },\n            {\n                \"no\": 3,\n                \"to_bank_name\": \"BNC\",\n                \"to_account_no\": \"222222222\",\n                \"to_account_name\": \"Maker 2\",\n                \"transfer_amount\": 3.3\n            }\n        ],\n        \"total_transfer_record\": 3,\n        \"total_transfer_amount\": 6.6\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Transaction",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"total_transfer_amount\": 6.6,\n    \"total_transfer_record\": 3,\n    \"instruction_type\": \"IMMEDIATE\",\n    \"transfer_records\": [\n        {\n            \"no\": 1,\n            \"to_bank_name\": \"BNC\",\n            \"to_account_no\": \"00011111\",\n            \"to_account_name\": \"Approver 1\",\n            \"transfer_amount\": 1.1\n        },\n        {\n            \"no\": 2,\n            \"to_bank_name\": \"BNC\",\n            \"to_account_no\": \"00022222\",\n            \"to_account_name\": \"Approver 2\",\n            \"transfer_amount\": 2.2\n        },\n        {\n            \"no\": 3,\n            \"to_bank_name\": \"BNC\",\n            \"to_account_no\": \"222222222\",\n            \"to_account_name\": \"Maker 2\",\n            \"transfer_amount\": 3.3\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/transaction",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"transaction"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"total_transfer_amount\": 6.6,\n    \"total_transfer_record\": 3,\n    \"instruction_type\": \"IMMEDIATE\",\n    \"transfer_records\": [\n        {\n            \"no\": 1,\n            \"to_bank_name\": \"BNC\",\n            \"to_account_no\": \"00011111\",\n            \"to_account_name\": \"Approver 1\",\n            \"transfer_amount\": 1.1\n        },\n        {\n            \"no\": 2,\n            \"to_bank_name\": \"BNC\",\n            \"to_account_no\": \"00022222\",\n            \"to_account_name\": \"Approver 2\",\n            \"transfer_amount\": 2.2\n        },\n        {\n            \"no\": 3,\n            \"to_bank_name\": \"BNC\",\n            \"to_account_no\": \"222222222\",\n            \"to_account_name\": \"Maker 2\",\n            \"transfer_amount\": 3.3\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/transaction",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transaction"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 05:35:54 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "445"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"success\",\n    \"data\": {\n        \"reference_no\": \"ce9wkgrnn0rvif7vlbxm59x6owg4sngn\",\n        \"total_transfer_amount\": 6.6,\n        \"total_transfer_record\": 3,\n        \"from_account_no\": \"111111111\",\n        \"maker_user_id\": \"maker1\",\n        \"transfer_date\": \"2024-05-27T12:35:54.225566+07:00\",\n        \"status\": \"AWAITING_APPROVAL\",\n        \"instruction_type\": \"IMMEDIATE\",\n        \"transfer_type\": \"ONLINE\",\n        \"estimated_service_fee\": 0,\n        \"created_at\": \"2024-05-27T12:35:54.22611+07:00\",\n        \"updated_at\": \"2024-05-27T12:35:54.22611+07:00\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Transaction",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"status\": \"APPROVED\" //AWAITING_APPROVAL;APPROVED;REJECTED\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/transaction/:reference_no",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"transaction",
+						":reference_no"
+					],
+					"variable": [
+						{
+							"key": "reference_no",
+							"value": "ce9wkgrnn0rvif7vlbxm59x6owg4sngn"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "forbidden",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"APPROVED\" //AWAITING_APPROVAL;APPROVED;REJECTED\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/transaction/:reference_no",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transaction",
+								":reference_no"
+							],
+							"variable": [
+								{
+									"key": "reference_no",
+									"value": "ce9wkgrnn0rvif7vlbxm59x6owg4sngn"
+								}
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 06:13:54 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "23"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Forbidden\"\n}"
+				},
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"APPROVED\" //AWAITING_APPROVAL;APPROVED;REJECTED\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/transaction/:reference_no",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transaction",
+								":reference_no"
+							],
+							"variable": [
+								{
+									"key": "reference_no",
+									"value": "ce9wkgrnn0rvif7vlbxm59x6owg4sngn"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 27 May 2024 06:16:55 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "743"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"success\",\n    \"data\": {\n        \"reference_no\": \"ce9wkgrnn0rvif7vlbxm59x6owg4sngn\",\n        \"total_transfer_amount\": 6.6,\n        \"total_transfer_record\": 3,\n        \"from_account_no\": \"111111111\",\n        \"maker_user_id\": \"maker1\",\n        \"maker_user_detail\": {\n            \"id\": \"maker1\",\n            \"corporate_account_no\": \"111111111\",\n            \"corporate_name\": \"My Corporation Maker 1\",\n            \"name\": \"Maker 1\",\n            \"role\": \"MAKER\",\n            \"phone\": \"+1234567890\",\n            \"email\": \"maker1@gmail.com\",\n            \"verified\": true,\n            \"created_at\": \"2024-05-27T11:55:54.136986+07:00\",\n            \"updated_at\": \"2024-05-27T11:55:54.136986+07:00\"\n        },\n        \"transfer_date\": \"2024-05-27T12:35:54.225566+07:00\",\n        \"status\": \"APPROVED\",\n        \"instruction_type\": \"IMMEDIATE\",\n        \"transfer_type\": \"ONLINE\",\n        \"estimated_service_fee\": 0,\n        \"created_at\": \"2024-05-27T12:35:54.22611+07:00\",\n        \"updated_at\": \"2024-05-27T13:16:55.396064+07:00\"\n    }\n}"
+				}
+			]
+		}
+	]
+}
