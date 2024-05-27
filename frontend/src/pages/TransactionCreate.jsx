@@ -17,7 +17,11 @@ const TransactionCreate = () => {
 
   const navigation = useNavigate()
 
-  // 2022-12-31T23:59:59Z
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      navigate('/login')
+    }
+  }, [])
 
   const validate = async (file) => {
     try {
