@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:alpine3.18
+    container_name: neobank-db
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+
+  api:
+    container_name: neobank-api
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:${PORT}"
+    volumes:
+      - .:/usr/src/app
+    command: ./main
+    depends_on:
+      - db
+    networks:
+      - application
+
+volumes:
+  postgres-db:
+
+networks:
+  application:
+    driver: bridge
